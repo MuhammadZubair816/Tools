@@ -1,0 +1,1287 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Free online MP3 Music Cutter tool - Trim your audio files to the perfect length. No installation needed, works in your browser.">
+    <title>MP3 Music Cutter | Free Online Audio Trimming Tool</title>
+    
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+            --primary: #4361ee;
+            --primary-light: #4895ef;
+            --secondary: #3f37c9;
+            --accent: #f72585;
+            --dark: #1a1a2e;
+            --light: #f8f9fa;
+            --gray: #6c757d;
+            --light-gray: #e9ecef;
+            --success: #4cc9f0;
+            --warning: #f8961e;
+            --danger: #ef233c;
+            
+            --border-radius: 12px;
+            --box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+            --transition: all 0.3s ease;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: #f5f7ff;
+            color: var(--dark);
+            line-height: 1.6;
+        }
+        
+        .container {
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        /* Header */
+        header {
+            background-color: white;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            padding: 15px 0;
+        }
+        
+        .header-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo {
+            display: flex;
+            align-items: center;
+            text-decoration: none;
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--primary);
+        }
+        
+        .logo i {
+            margin-right: 10px;
+            color: var(--accent);
+        }
+        
+        nav ul {
+            display: flex;
+            list-style: none;
+        }
+        
+        nav ul li {
+            margin-left: 25px;
+        }
+        
+        nav ul li a {
+            text-decoration: none;
+            color: var(--dark);
+            font-weight: 500;
+            transition: var(--transition);
+            position: relative;
+        }
+        
+        nav ul li a:hover {
+            color: var(--primary);
+        }
+        
+        nav ul li a::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            background: var(--primary);
+            bottom: -5px;
+            left: 0;
+            transition: var(--transition);
+        }
+        
+        nav ul li a:hover::after {
+            width: 100%;
+        }
+        
+        /* Hero Section */
+        .hero {
+            text-align: center;
+            padding: 60px 0 40px;
+        }
+        
+        .hero h1 {
+            font-size: 2.5rem;
+            margin-bottom: 15px;
+            color: var(--dark);
+            font-weight: 700;
+        }
+        
+        .hero p {
+            font-size: 1.1rem;
+            color: var(--gray);
+            max-width: 700px;
+            margin: 0 auto 30px;
+        }
+        
+        /* Ad Containers */
+        .ad-container {
+            background-color: white;
+            border-radius: var(--border-radius);
+            padding: 20px;
+            margin: 30px 0;
+            text-align: center;
+            box-shadow: var(--box-shadow);
+            overflow: hidden;
+        }
+        
+        .ad-label {
+            display: block;
+            font-size: 0.8rem;
+            color: var(--gray);
+            margin-bottom: 10px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        
+        .ad-responsive {
+            width: 100%;
+            height: auto;
+            min-height: 90px;
+            background-color: #f8f9fa;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 8px;
+            color: var(--gray);
+            font-size: 0.9rem;
+        }
+        
+        .ad-sidebar {
+            width: 100%;
+            min-height: 250px;
+            background-color: #f8f9fa;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 8px;
+            color: var(--gray);
+            font-size: 0.9rem;
+            margin-bottom: 20px;
+        }
+        
+        /* Main Content Layout */
+        .main-content {
+            display: flex;
+            gap: 30px;
+            margin-top: 20px;
+        }
+        
+        .content-primary {
+            flex: 1;
+            min-width: 0;
+        }
+        
+        .content-sidebar {
+            width: 300px;
+        }
+        
+        /* Tool Container */
+        .tool-container {
+            background-color: white;
+            border-radius: var(--border-radius);
+            box-shadow: var(--box-shadow);
+            padding: 30px;
+            margin-bottom: 30px;
+            transition: var(--transition);
+        }
+        
+        .tool-container:hover {
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.15);
+        }
+        
+        .section-title {
+            font-size: 1.5rem;
+            margin-bottom: 25px;
+            color: var(--dark);
+            position: relative;
+            padding-bottom: 10px;
+        }
+        
+        .section-title::after {
+            content: '';
+            position: absolute;
+            width: 50px;
+            height: 3px;
+            background: linear-gradient(to right, var(--primary), var(--accent));
+            bottom: 0;
+            left: 0;
+            border-radius: 3px;
+        }
+        
+        /* File Upload */
+        .file-upload {
+            border: 2px dashed var(--light-gray);
+            border-radius: var(--border-radius);
+            padding: 40px 20px;
+            text-align: center;
+            cursor: pointer;
+            transition: var(--transition);
+            margin-bottom: 25px;
+            background-color: rgba(67, 97, 238, 0.03);
+        }
+        
+        .file-upload:hover {
+            border-color: var(--primary-light);
+            background-color: rgba(67, 97, 238, 0.05);
+        }
+        
+        .file-upload input {
+            display: none;
+        }
+        
+        .file-upload label {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            cursor: pointer;
+        }
+        
+        .upload-icon {
+            font-size: 3.5rem;
+            color: var(--primary);
+            margin-bottom: 15px;
+        }
+        
+        .file-upload h3 {
+            font-size: 1.2rem;
+            margin-bottom: 10px;
+            color: var(--dark);
+        }
+        
+        .file-upload p {
+            color: var(--gray);
+            font-size: 0.9rem;
+        }
+        
+        .file-info {
+            margin-top: 15px;
+            font-size: 0.9rem;
+            color: var(--gray);
+            padding: 8px 15px;
+            background-color: var(--light-gray);
+            border-radius: 20px;
+            display: inline-block;
+        }
+        
+        /* Audio Player */
+        .audio-player-container {
+            margin: 25px 0;
+        }
+        
+        .audio-player {
+            width: 100%;
+            border-radius: var(--border-radius);
+            background-color: var(--light);
+        }
+        
+        /* Range Controls */
+        .range-container {
+            margin: 30px 0;
+        }
+        
+        .range-slider {
+            width: 100%;
+            height: 8px;
+            -webkit-appearance: none;
+            appearance: none;
+            background: var(--light-gray);
+            border-radius: 10px;
+            outline: none;
+            margin: 15px 0;
+        }
+        
+        .range-slider::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 20px;
+            height: 20px;
+            background: var(--primary);
+            cursor: pointer;
+            border-radius: 50%;
+            border: 3px solid white;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+        }
+        
+        .time-inputs {
+            display: flex;
+            gap: 15px;
+            margin-top: 15px;
+        }
+        
+        .time-input {
+            flex: 1;
+        }
+        
+        .time-input label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 500;
+            color: var(--dark);
+        }
+        
+        .time-input input {
+            width: 100%;
+            padding: 12px 15px;
+            border: 1px solid var(--light-gray);
+            border-radius: var(--border-radius);
+            font-size: 1rem;
+            transition: var(--transition);
+        }
+        
+        .time-input input:focus {
+            border-color: var(--primary-light);
+            outline: none;
+            box-shadow: 0 0 0 3px rgba(67, 97, 238, 0.1);
+        }
+        
+        /* Buttons */
+        .action-buttons {
+            display: flex;
+            gap: 15px;
+            margin-top: 25px;
+            flex-wrap: wrap;
+        }
+        
+        .btn {
+            padding: 12px 25px;
+            border: none;
+            border-radius: var(--border-radius);
+            font-size: 1rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: var(--transition);
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+        
+        .btn-primary {
+            background-color: var(--primary);
+            color: white;
+        }
+        
+        .btn-primary:hover {
+            background-color: var(--secondary);
+            transform: translateY(-2px);
+        }
+        
+        .btn-secondary {
+            background-color: var(--light-gray);
+            color: var(--dark);
+        }
+        
+        .btn-secondary:hover {
+            background-color: #d3d9df;
+            transform: translateY(-2px);
+        }
+        
+        .btn-success {
+            background-color: var(--success);
+            color: white;
+        }
+        
+        .btn-success:hover {
+            background-color: #3aa8d8;
+            transform: translateY(-2px);
+        }
+        
+        /* Result Section */
+        .result-section {
+            margin-top: 30px;
+            padding: 25px;
+            background-color: rgba(76, 201, 240, 0.1);
+            border-radius: var(--border-radius);
+            display: none;
+            animation: fadeIn 0.5s ease;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .result-section h3 {
+            margin-bottom: 15px;
+            color: var(--dark);
+        }
+        
+        /* Loading Spinner */
+        .spinner {
+            display: none;
+            width: 50px;
+            height: 50px;
+            margin: 30px auto;
+            border: 5px solid rgba(67, 97, 238, 0.1);
+            border-radius: 50%;
+            border-top-color: var(--primary);
+            animation: spin 1s ease-in-out infinite;
+        }
+        
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+        
+        /* Features Section */
+        .features {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 25px;
+            margin-top: 30px;
+        }
+        
+        .feature-card {
+            background-color: white;
+            border-radius: var(--border-radius);
+            padding: 25px;
+            box-shadow: var(--box-shadow);
+            transition: var(--transition);
+        }
+        
+        .feature-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.15);
+        }
+        
+        .feature-icon {
+            font-size: 2.5rem;
+            color: var(--primary);
+            margin-bottom: 15px;
+        }
+        
+        .feature-card h3 {
+            margin-bottom: 10px;
+            color: var(--dark);
+        }
+        
+        .feature-card p {
+            color: var(--gray);
+            font-size: 0.95rem;
+        }
+        
+        /* Footer */
+        footer {
+            background-color: var(--dark);
+            color: white;
+            padding: 50px 0 20px;
+            margin-top: 50px;
+        }
+        
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 30px;
+            margin-bottom: 30px;
+        }
+        
+        .footer-column h3 {
+            font-size: 1.2rem;
+            margin-bottom: 20px;
+            position: relative;
+            padding-bottom: 10px;
+        }
+        
+        .footer-column h3::after {
+            content: '';
+            position: absolute;
+            width: 40px;
+            height: 3px;
+            background: var(--primary);
+            bottom: 0;
+            left: 0;
+            border-radius: 3px;
+        }
+        
+        .footer-links {
+            list-style: none;
+        }
+        
+        .footer-links li {
+            margin-bottom: 10px;
+        }
+        
+        .footer-links a {
+            color: #b8b8b8;
+            text-decoration: none;
+            transition: var(--transition);
+            display: inline-block;
+        }
+        
+        .footer-links a:hover {
+            color: white;
+            transform: translateX(5px);
+        }
+        
+        .social-links {
+            display: flex;
+            gap: 15px;
+            margin-top: 20px;
+        }
+        
+        .social-links a {
+            color: white;
+            background-color: rgba(255, 255, 255, 0.1);
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: var(--transition);
+        }
+        
+        .social-links a:hover {
+            background-color: var(--primary);
+            transform: translateY(-3px);
+        }
+        
+        .copyright {
+            text-align: center;
+            padding-top: 20px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            color: #b8b8b8;
+            font-size: 0.9rem;
+        }
+        
+        /* Responsive Design */
+        @media (max-width: 992px) {
+            .main-content {
+                flex-direction: column;
+            }
+            
+            .content-sidebar {
+                width: 100%;
+                display: flex;
+                flex-wrap: wrap;
+                gap: 20px;
+            }
+            
+            .ad-sidebar {
+                flex: 1;
+                min-width: 250px;
+                min-height: 200px;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .header-container {
+                flex-direction: column;
+                text-align: center;
+            }
+            
+            nav ul {
+                margin-top: 20px;
+                justify-content: center;
+            }
+            
+            nav ul li {
+                margin: 0 10px;
+            }
+            
+            .hero h1 {
+                font-size: 2rem;
+            }
+            
+            .time-inputs {
+                flex-direction: column;
+            }
+            
+            .action-buttons {
+                flex-direction: column;
+            }
+            
+            .btn {
+                width: 100%;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .hero {
+                padding: 40px 0 20px;
+            }
+            
+            .hero h1 {
+                font-size: 1.8rem;
+            }
+            
+            .tool-container {
+                padding: 20px;
+            }
+            
+            .section-title {
+                font-size: 1.3rem;
+            }
+            
+            .content-sidebar {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container header-container">
+            <a href="/" class="logo">
+                <i class="fas fa-music"></i>
+                MP3<span>Cutter</span>
+            </a>
+            <nav>
+                <ul>
+                    <li><a href="/">Home</a></li>
+                    <li><a href="/features">Features</a></li>
+                    <li><a href="/how-it-works">How It Works</a></li>
+                    <li><a href="/contact">Contact</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+    
+    <div class="ad-container">
+        <!-- Leaderboard Ad (Top of Page) -->
+        <span class="ad-label">Advertisement</span>
+        <div class="ad-responsive">
+            <!-- Replace with your AdSense code -->
+            <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-YOUR_ADSENSE_ID"
+                crossorigin="anonymous"></script>
+            <!-- Top Banner -->
+            <ins class="adsbygoogle"
+                style="display:block"
+                data-ad-client="ca-pub-YOUR_ADSENSE_ID"
+                data-ad-slot="YOUR_LEADERBOARD_SLOT"
+                data-ad-format="auto"
+                data-full-width-responsive="true"></ins>
+            <script>
+                (adsbygoogle = window.adsbygoogle || []).push({});
+            </script>
+        </div>
+    </div>
+    
+    <main class="container">
+        <section class="hero">
+            <h1>Trim Your Audio Files Perfectly</h1>
+            <p>Cut and edit your MP3 files online for free. No registration required - just upload, trim, and download!</p>
+        </section>
+        
+        <div class="main-content">
+            <div class="content-primary">
+                <section class="tool-container">
+                    <h2 class="section-title">Audio Cutter</h2>
+                    
+                    <div class="file-upload" id="fileUpload">
+                        <input type="file" id="audioFile" accept="audio/*">
+                        <label for="audioFile">
+                            <div class="upload-icon">
+                                <i class="fas fa-cloud-upload-alt"></i>
+                            </div>
+                            <h3>Upload Your Audio File</h3>
+                            <p>Drag & drop your file here or click to browse</p>
+                        </label>
+                        <div class="file-info" id="fileInfo">No file selected</div>
+                    </div>
+                    
+                    <div id="playerSection" style="display: none;">
+                        <div class="audio-player-container">
+                            <audio controls class="audio-player" id="audioPlayer"></audio>
+                        </div>
+                        
+                        <div class="range-container">
+                            <label for="trimRange">Select Audio Range</label>
+                            <input type="range" id="trimRange" min="0" max="100" value="0" class="range-slider">
+                            <div class="time-inputs">
+                                <div class="time-input">
+                                    <label for="startTime">Start Time (seconds)</label>
+                                    <input type="number" id="startTime" min="0" value="0" step="0.1">
+                                </div>
+                                <div class="time-input">
+                                    <label for="endTime">End Time (seconds)</label>
+                                    <input type="number" id="endTime" min="0" value="0" step="0.1">
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="action-buttons">
+                            <button class="btn btn-primary" id="playSelection">
+                                <i class="fas fa-play"></i> Play Selection
+                            </button>
+                            <button class="btn btn-secondary" id="previewBtn">
+                                <i class="fas fa-eye"></i> Preview
+                            </button>
+                            <button class="btn btn-primary" id="cutBtn">
+                                <i class="fas fa-cut"></i> Cut Audio
+                            </button>
+                        </div>
+                        
+                        <div class="spinner" id="loadingSpinner"></div>
+                        
+                        <div class="result-section" id="resultSection">
+                            <h3><i class="fas fa-check-circle"></i> Your trimmed audio is ready!</h3>
+                            <div class="audio-player-container">
+                                <audio controls class="audio-player" id="resultPlayer"></audio>
+                            </div>
+                            <button class="btn btn-success" id="downloadBtn">
+                                <i class="fas fa-download"></i> Download Trimmed Audio
+                            </button>
+                        </div>
+                    </div>
+                </section>
+                
+                <div class="ad-container">
+                    <!-- Middle Content Ad -->
+                    <span class="ad-label">Advertisement</span>
+                    <div class="ad-responsive">
+                        <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-YOUR_ADSENSE_ID"
+                            crossorigin="anonymous"></script>
+                        <!-- Content Ad -->
+                        <ins class="adsbygoogle"
+                            style="display:block"
+                            data-ad-client="ca-pub-YOUR_ADSENSE_ID"
+                            data-ad-slot="YOUR_CONTENT_SLOT"
+                            data-ad-format="auto"
+                            data-full-width-responsive="true"></ins>
+                        <script>
+                            (adsbygoogle = window.adsbygoogle || []).push({});
+                        </script>
+                    </div>
+                </div>
+                
+                <section class="tool-container">
+                    <h2 class="section-title">Key Features</h2>
+                    
+                    <div class="features">
+                        <div class="feature-card">
+                            <div class="feature-icon">
+                                <i class="fas fa-bolt"></i>
+                            </div>
+                            <h3>Lightning Fast</h3>
+                            <p>Trim your audio files in seconds with our optimized processing engine.</p>
+                        </div>
+                        
+                        <div class="feature-card">
+                            <div class="feature-icon">
+                                <i class="fas fa-shield-alt"></i>
+                            </div>
+                            <h3>Privacy Focused</h3>
+                            <p>All processing happens in your browser - your files never leave your device.</p>
+                        </div>
+                        
+                        <div class="feature-card">
+                            <div class="feature-icon">
+                                <i class="fas fa-mobile-alt"></i>
+                            </div>
+                            <h3>Mobile Friendly</h3>
+                            <p>Works perfectly on all devices including smartphones and tablets.</p>
+                        </div>
+                        
+                        <div class="feature-card">
+                            <div class="feature-icon">
+                                <i class="fas fa-file-audio"></i>
+                            </div>
+                            <h3>Multiple Formats</h3>
+                            <p>Supports MP3, WAV, OGG, and other popular audio formats.</p>
+                        </div>
+                    </div>
+                </section>
+            </div>
+            
+            <div class="content-sidebar">
+                <div class="ad-sidebar">
+                    <!-- Sidebar Ad 1 -->
+                    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-YOUR_ADSENSE_ID"
+                        crossorigin="anonymous"></script>
+                    <!-- Sidebar Ad -->
+                    <ins class="adsbygoogle"
+                        style="display:block"
+                        data-ad-client="ca-pub-YOUR_ADSENSE_ID"
+                        data-ad-slot="YOUR_SIDEBAR_SLOT_1"
+                        data-ad-format="auto"
+                        data-full-width-responsive="true"></ins>
+                    <script>
+                        (adsbygoogle = window.adsbygoogle || []).push({});
+                    </script>
+                </div>
+                
+                <div class="tool-container" style="margin-bottom: 20px;">
+                    <h3>How to Use</h3>
+                    <ol style="margin-left: 20px; margin-top: 15px;">
+                        <li style="margin-bottom: 10px;">Upload your audio file</li>
+                        <li style="margin-bottom: 10px;">Select start and end points</li>
+                        <li style="margin-bottom: 10px;">Preview your selection</li>
+                        <li style="margin-bottom: 10px;">Cut and download</li>
+                    </ol>
+                </div>
+                
+                <div class="ad-sidebar">
+                    <!-- Sidebar Ad 2 -->
+                    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-YOUR_ADSENSE_ID"
+                        crossorigin="anonymous"></script>
+                    <!-- Sidebar Ad -->
+                    <ins class="adsbygoogle"
+                        style="display:block"
+                        data-ad-client="ca-pub-YOUR_ADSENSE_ID"
+                        data-ad-slot="YOUR_SIDEBAR_SLOT_2"
+                        data-ad-format="auto"
+                        data-full-width-responsive="true"></ins>
+                    <script>
+                        (adsbygoogle = window.adsbygoogle || []).push({});
+                    </script>
+                </div>
+            </div>
+        </div>
+        
+        <div class="ad-container">
+            <!-- Bottom Banner Ad -->
+            <span class="ad-label">Advertisement</span>
+            <div class="ad-responsive">
+                <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-YOUR_ADSENSE_ID"
+                    crossorigin="anonymous"></script>
+                <!-- Bottom Banner -->
+                <ins class="adsbygoogle"
+                    style="display:block"
+                    data-ad-client="ca-pub-YOUR_ADSENSE_ID"
+                    data-ad-slot="YOUR_BOTTOM_SLOT"
+                    data-ad-format="auto"
+                    data-full-width-responsive="true"></ins>
+                <script>
+                    (adsbygoogle = window.adsbygoogle || []).push({});
+                </script>
+            </div>
+        </div>
+    </main>
+    
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-column">
+                    <h3>MP3 Cutter</h3>
+                    <p>The easiest way to trim and edit your audio files online for free.</p>
+                    <div class="social-links">
+                        <a href="#"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                        <a href="#"><i class="fab fa-youtube"></i></a>
+                    </div>
+                </div>
+                
+                <div class="footer-column">
+                    <h3>Quick Links</h3>
+                    <ul class="footer-links">
+                        <li><a href="/">Home</a></li>
+                        <li><a href="/features">Features</a></li>
+                        <li><a href="/how-it-works">How It Works</a></li>
+                        <li><a href="/faq">FAQ</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-column">
+                    <h3>Legal</h3>
+                    <ul class="footer-links">
+                        <li><a href="/privacy">Privacy Policy</a></li>
+                        <li><a href="/terms">Terms of Service</a></li>
+                        <li><a href="/cookies">Cookie Policy</a></li>
+                        <li><a href="/dmca">DMCA</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-column">
+                    <h3>Contact</h3>
+                    <ul class="footer-links">
+                        <li><a href="mailto:contact@mp3cutter.com">contact@mp3cutter.com</a></li>
+                        <li><a href="/contact">Contact Form</a></li>
+                        <li><a href="/report">Report an Issue</a></li>
+                        <li><a href="/feedback">Feedback</a></li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="copyright">
+                &copy; 2023 MP3 Cutter Tool. All rights reserved.
+            </div>
+        </div>
+    </footer>
+    
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // DOM elements
+            const fileUpload = document.getElementById('fileUpload');
+            const audioFileInput = document.getElementById('audioFile');
+            const fileInfo = document.getElementById('fileInfo');
+            const playerSection = document.getElementById('playerSection');
+            const audioPlayer = document.getElementById('audioPlayer');
+            const startTimeInput = document.getElementById('startTime');
+            const endTimeInput = document.getElementById('endTime');
+            const trimRange = document.getElementById('trimRange');
+            const playSelectionBtn = document.getElementById('playSelection');
+            const previewBtn = document.getElementById('previewBtn');
+            const cutBtn = document.getElementById('cutBtn');
+            const loadingSpinner = document.getElementById('loadingSpinner');
+            const resultSection = document.getElementById('resultSection');
+            const resultPlayer = document.getElementById('resultPlayer');
+            const downloadBtn = document.getElementById('downloadBtn');
+            
+            // Variables
+            let audioContext;
+            let audioBuffer;
+            let audioDuration = 0;
+            let audioSource;
+            
+            // File upload handling
+            fileUpload.addEventListener('dragover', (e) => {
+                e.preventDefault();
+                fileUpload.style.borderColor = 'var(--primary)';
+                fileUpload.style.backgroundColor = 'rgba(67, 97, 238, 0.05)';
+            });
+            
+            fileUpload.addEventListener('dragleave', () => {
+                fileUpload.style.borderColor = 'var(--light-gray)';
+                fileUpload.style.backgroundColor = 'rgba(67, 97, 238, 0.03)';
+            });
+            
+            fileUpload.addEventListener('drop', (e) => {
+                e.preventDefault();
+                fileUpload.style.borderColor = 'var(--light-gray)';
+                fileUpload.style.backgroundColor = 'rgba(67, 97, 238, 0.03)';
+                
+                if (e.dataTransfer.files.length) {
+                    audioFileInput.files = e.dataTransfer.files;
+                    handleFileUpload();
+                }
+            });
+            
+            audioFileInput.addEventListener('change', handleFileUpload);
+            
+            function handleFileUpload() {
+                const file = audioFileInput.files[0];
+                if (!file) return;
+                
+                fileInfo.textContent = `Selected: ${file.name} (${formatFileSize(file.size)})`;
+                
+                const fileURL = URL.createObjectURL(file);
+                audioPlayer.src = fileURL;
+                playerSection.style.display = 'block';
+                
+                // Initialize audio context and analyze file
+                initAudioContext(file);
+            }
+            
+            function formatFileSize(bytes) {
+                if (bytes === 0) return '0 Bytes';
+                const k = 1024;
+                const sizes = ['Bytes', 'KB', 'MB', 'GB'];
+                const i = Math.floor(Math.log(bytes) / Math.log(k));
+                return parseFloat((bytes / Math.pow(k, i)).toFixed(2)) + ' ' + sizes[i];
+            }
+            
+            function initAudioContext(file) {
+                // Create audio context
+                audioContext = new (window.AudioContext || window.webkitAudioContext)();
+                
+                const fileReader = new FileReader();
+                fileReader.onload = function(e) {
+                    audioContext.decodeAudioData(e.target.result)
+                        .then(buffer => {
+                            audioBuffer = buffer;
+                            audioDuration = buffer.duration;
+                            updateTimeInputs();
+                        })
+                        .catch(err => {
+                            console.error('Error decoding audio data', err);
+                            showError('Error processing audio file. Please try another file.');
+                        });
+                };
+                fileReader.readAsArrayBuffer(file);
+            }
+            
+            function updateTimeInputs() {
+                // Set max values for inputs
+                startTimeInput.max = audioDuration;
+                endTimeInput.max = audioDuration;
+                endTimeInput.value = audioDuration.toFixed(1);
+                
+                // Update range slider max
+                trimRange.max = audioDuration;
+            }
+            
+            // Range slider handling
+            trimRange.addEventListener('input', function() {
+                if (!audioDuration) return;
+                
+                const currentTime = parseFloat(this.value);
+                audioPlayer.currentTime = currentTime;
+                startTimeInput.value = currentTime.toFixed(1);
+            });
+            
+            // Time input handling
+            startTimeInput.addEventListener('input', function() {
+                if (!audioDuration) return;
+                
+                const startTime = parseFloat(this.value) || 0;
+                const endTime = parseFloat(endTimeInput.value) || audioDuration;
+                
+                if (startTime >= endTime) {
+                    this.value = (endTime - 0.1).toFixed(1);
+                    return;
+                }
+                
+                trimRange.value = startTime;
+                audioPlayer.currentTime = startTime;
+            });
+            
+            endTimeInput.addEventListener('input', function() {
+                if (!audioDuration) return;
+                
+                const startTime = parseFloat(startTimeInput.value) || 0;
+                const endTime = parseFloat(this.value) || audioDuration;
+                
+                if (endTime <= startTime) {
+                    this.value = (startTime + 0.1).toFixed(1);
+                    return;
+                }
+            });
+            
+            // Play selection button
+            playSelectionBtn.addEventListener('click', function() {
+                if (!audioBuffer) return;
+                
+                const startTime = parseFloat(startTimeInput.value) || 0;
+                const endTime = parseFloat(endTimeInput.value) || audioDuration;
+                
+                // Stop any currently playing audio
+                if (audioSource) {
+                    audioSource.stop();
+                }
+                
+                // Create new audio source
+                audioSource = audioContext.createBufferSource();
+                audioSource.buffer = audioBuffer;
+                
+                // Create gain node for fade in/out
+                const gainNode = audioContext.createGain();
+                gainNode.gain.setValueAtTime(0, audioContext.currentTime);
+                gainNode.gain.linearRampToValueAtTime(1, audioContext.currentTime + 0.1);
+                gainNode.gain.linearRampToValueAtTime(0, audioContext.currentTime + (endTime - startTime) - 0.1);
+                
+                // Connect nodes
+                audioSource.connect(gainNode);
+                gainNode.connect(audioContext.destination);
+                
+                // Play the selection
+                audioSource.start(0, startTime, endTime - startTime);
+            });
+            
+            // Preview button
+            previewBtn.addEventListener('click', function() {
+                const startTime = parseFloat(startTimeInput.value) || 0;
+                const endTime = parseFloat(endTimeInput.value) || audioDuration;
+                
+                audioPlayer.currentTime = startTime;
+                audioPlayer.play();
+                
+                // Set timeout to pause at end time
+                const duration = endTime - startTime;
+                setTimeout(() => {
+                    audioPlayer.pause();
+                }, duration * 1000);
+            });
+            
+            // Cut audio button
+            cutBtn.addEventListener('click', function() {
+                if (!audioBuffer) return;
+                
+                const startTime = parseFloat(startTimeInput.value) || 0;
+                const endTime = parseFloat(endTimeInput.value) || audioDuration;
+                
+                if (startTime >= endTime) {
+                    showError('End time must be after start time');
+                    return;
+                }
+                
+                // Show loading spinner
+                loadingSpinner.style.display = 'block';
+                resultSection.style.display = 'none';
+                cutBtn.disabled = true;
+                cutBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Processing...';
+                
+                // Process in small chunks to avoid blocking UI
+                setTimeout(() => {
+                    try {
+                        const trimmedBuffer = trimAudioBuffer(audioBuffer, startTime, endTime);
+                        createAudioBlob(trimmedBuffer);
+                    } catch (err) {
+                        console.error('Error trimming audio:', err);
+                        showError('Error processing audio. Please try again.');
+                    } finally {
+                        loadingSpinner.style.display = 'none';
+                        cutBtn.disabled = false;
+                        cutBtn.innerHTML = '<i class="fas fa-cut"></i> Cut Audio';
+                    }
+                }, 100);
+            });
+            
+            function trimAudioBuffer(buffer, startTime, endTime) {
+                const sampleRate = buffer.sampleRate;
+                const startOffset = Math.floor(startTime * sampleRate);
+                const endOffset = Math.floor(endTime * sampleRate);
+                const frameCount = endOffset - startOffset;
+                
+                // Create new buffer with the trimmed length
+                const newBuffer = audioContext.createBuffer(
+                    buffer.numberOfChannels,
+                    frameCount,
+                    sampleRate
+                );
+                
+                // Copy the data for each channel
+                for (let channel = 0; channel < buffer.numberOfChannels; channel++) {
+                    const channelData = buffer.getChannelData(channel);
+                    const newChannelData = newBuffer.getChannelData(channel);
+                    
+                    for (let i = 0; i < frameCount; i++) {
+                        newChannelData[i] = channelData[i + startOffset];
+                    }
+                }
+                
+                return newBuffer;
+            }
+            
+            function createAudioBlob(buffer) {
+                // Convert buffer to WAV (MP3 encoding requires a library like lamejs)
+                const wavBlob = bufferToWav(buffer);
+                const url = URL.createObjectURL(wavBlob);
+                
+                // Display the result
+                resultPlayer.src = url;
+                resultSection.style.display = 'block';
+                
+                // Set up download
+                downloadBtn.onclick = function() {
+                    const a = document.createElement('a');
+                    a.href = url;
+                    a.download = `trimmed_audio_${Date.now()}.wav`;
+                    document.body.appendChild(a);
+                    a.click();
+                    document.body.removeChild(a);
+                };
+            }
+            
+            function bufferToWav(buffer) {
+                const numChannels = buffer.numberOfChannels;
+                const sampleRate = buffer.sampleRate;
+                const length = buffer.length;
+                
+                // Create WAV header
+                const header = new ArrayBuffer(44);
+                const view = new DataView(header);
+                
+                // RIFF identifier
+                writeString(view, 0, 'RIFF');
+                // RIFF chunk length
+                view.setUint32(4, 36 + length * numChannels * 2, true);
+                // RIFF type
+                writeString(view, 8, 'WAVE');
+                // Format chunk identifier
+                writeString(view, 12, 'fmt ');
+                // Format chunk length
+                view.setUint32(16, 16, true);
+                // Sample format (raw)
+                view.setUint16(20, 1, true);
+                // Channel count
+                view.setUint16(22, numChannels, true);
+                // Sample rate
+                view.setUint32(24, sampleRate, true);
+                // Byte rate (sample rate * block align)
+                view.setUint32(28, sampleRate * numChannels * 2, true);
+                // Block align (channel count * bytes per sample)
+                view.setUint16(32, numChannels * 2, true);
+                // Bits per sample
+                view.setUint16(34, 16, true);
+                // Data chunk identifier
+                writeString(view, 36, 'data');
+                // Data chunk length
+                view.setUint32(40, length * numChannels * 2, true);
+                
+                // Interleave the channels and write to the buffer
+                const interleaved = new Float32Array(length * numChannels);
+                for (let channel = 0; channel < numChannels; channel++) {
+                    const channelData = buffer.getChannelData(channel);
+                    for (let i = 0; i < length; i++) {
+                        interleaved[i * numChannels + channel] = channelData[i];
+                    }
+                }
+                
+                // Convert to 16-bit PCM
+                const data = new Int16Array(length * numChannels);
+                for (let i = 0; i < interleaved.length; i++) {
+                    const s = Math.max(-1, Math.min(1, interleaved[i]));
+                    data[i] = s < 0 ? s * 0x8000 : s * 0x7FFF;
+                }
+                
+                // Combine header and data
+                const wavBlob = new Blob([header, data], { type: 'audio/wav' });
+                return wavBlob;
+            }
+            
+            function writeString(view, offset, string) {
+                for (let i = 0; i < string.length; i++) {
+                    view.setUint8(offset + i, string.charCodeAt(i));
+                }
+            }
+            
+            function showError(message) {
+                // Create error notification
+                const notification = document.createElement('div');
+                notification.style.position = 'fixed';
+                notification.style.bottom = '20px';
+                notification.style.right = '20px';
+                notification.style.backgroundColor = 'var(--danger)';
+                notification.style.color = 'white';
+                notification.style.padding = '15px 25px';
+                notification.style.borderRadius = 'var(--border-radius)';
+                notification.style.boxShadow = 'var(--box-shadow)';
+                notification.style.zIndex = '1000';
+                notification.style.animation = 'fadeIn 0.3s ease';
+                notification.innerHTML = `<i class="fas fa-exclamation-circle"></i> ${message}`;
+                
+                document.body.appendChild(notification);
+                
+                // Remove after 5 seconds
+                setTimeout(() => {
+                    notification.style.animation = 'fadeOut 0.3s ease';
+                    setTimeout(() => {
+                        document.body.removeChild(notification);
+                    }, 300);
+                }, 5000);
+            }
+            
+            // Update time display as audio plays
+            audioPlayer.addEventListener('timeupdate', function() {
+                startTimeInput.value = audioPlayer.currentTime.toFixed(1);
+                trimRange.value = audioPlayer.currentTime;
+            });
+        });
+    </script>
+</body>
+</html>
